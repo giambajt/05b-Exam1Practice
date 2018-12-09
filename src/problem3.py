@@ -3,8 +3,8 @@ PRACTICE Exam 1, problem 3.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Valerie Galluzzi, Mark Hays, Amanda Stouder, Aaron Wilkin,
-         their colleagues, and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues, and Joshua Giambattista.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -38,7 +38,7 @@ def main():
 def run_test_problem3a():
     """ Tests the   problem3a   function. """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement this TEST function.
+    # Done: 2. Implement this TEST function.
     #   It TESTS the  problem1a  function defined below.
     #   Include at least **   5   ** tests (we wrote four for you).
     # -------------------------------------------------------------------------
@@ -98,6 +98,20 @@ def run_test_problem3a():
 
     window3.close_on_mouse_click()
 
+    #window 4:
+    title = 'Problem 3a. Test 5: Start at (100, 100), 5 lines'
+    window4 = rg.RoseWindow(500,500,title)
+
+    #Test 5 (on Window 4)
+    point = rg.Point(100,100)
+    expected = 25
+    answer = problem3a(window4,point,5)
+    print()
+    print('Test 5 expected:', expected)
+    print('       actual:  ', answer)
+    window4.close_on_mouse_click()
+
+
     # -------------------------------------------------------------------------
     # TO DO: 2 (continued).
     # Below this comment (or integrated with one of the above tests,
@@ -138,7 +152,7 @@ def problem3a(window, point, n):
         :type n:      int
     """
     # -------------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # Done: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # -------------------------------------------------------------------------
     # -------------------------------------------------------------------------
@@ -146,7 +160,27 @@ def problem3a(window, point, n):
     #    DIFFICULTY:      7 or 8
     #    TIME ESTIMATE:   20 to 35 minutes.
     # -------------------------------------------------------------------------
+   # y = point.y + 50
+   # line = rg.Line(point, rg.Point(point.x,y))
+    #line.attach_to(window)
+    thick = 1
+    total = 0
+    for k in range(n):
+        x1 = point.x + (20*k)
+        y1 = point.y + (10*k)
+        y2 = (y1+50)
+        line = rg.Line(rg.Point(x1,y1),rg.Point(x1,y2))
 
+        if thick < 12:
+            line.thickness = thick
+            total = total + thick
+            thick = thick + 2
+        else:
+            line.thickness = thick
+            total = total + thick
+        line.attach_to(window)
+    window.render()
+    return total
 
 def run_test_problem3b():
     """ Tests the   problem3b   function. """
@@ -202,7 +236,7 @@ def problem3b(m, point1):
         :type point1: rg.Point
     """
     # -------------------------------------------------------------------------
-    # TODO: 4. Implement and test this function.
+    # Done: 4. Implement and test this function.
     #          Tests have been written for you (above).
     #
     ###########################################################################
@@ -215,7 +249,18 @@ def problem3b(m, point1):
     #    DIFFICULTY:      8 or 9
     #    TIME ESTIMATE:   20 to 30 minutes.
     # -------------------------------------------------------------------------
-
+    window = rg.RoseWindow(400,650)
+    y = point1.y +50
+    line= rg.Line(point1,rg.Point(point1.x,y))
+    line.attach_to(window)
+    n=3
+    answer = 0
+    for k in range(m):
+        total = problem3a(window,rg.Point(point1.x,point1.y + (60*k)), n+(k*2))
+        answer = answer + total
+    window.render()
+    window.close_on_mouse_click()
+    return answer
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
